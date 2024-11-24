@@ -23,6 +23,7 @@ public class Trail implements Serializable {
     private String name;
 
     @Column(name = "trail_level", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TrailLevel level;
 
     public Trail() {

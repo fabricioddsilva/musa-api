@@ -1,6 +1,7 @@
 package com.kaos.musa.controllers;
 
 import com.kaos.musa.entities.Trail;
+import com.kaos.musa.entities.TrailCourses;
 import com.kaos.musa.services.TrailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,22 +15,31 @@ import java.util.List;
 public class TrailController {
 
     @Autowired
-    private TrailService service;
+    private TrailService trailService;
 
     @GetMapping
     public ResponseEntity<List<Trail>> findAll(){
-        return ResponseEntity.ok().body(service.findAll());
+        return ResponseEntity.ok().body(trailService.findAll());
     }
 
     @PostMapping
     public ResponseEntity<Void> insertTrail(@RequestBody Trail trail){
-        service.insert(trail);
+        trailService.insert(trail);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Trail> findById(@PathVariable Integer id){
-        return ResponseEntity.ok().body(service.findById(id));
+    public ResponseEntity<List<TrailCourses>> findById(@PathVariable Integer id){
+        return ResponseEntity.ok().body(trailService.findAllTrailCourses(id));
     }
+
+    @PostMapping("/{trail_id}/course/{course_id}")
+    public ResponseEntity<Void> insertCourse (
+            @PathVariable(name = "trail_id") Integer trailId, @PathVariable(name = "course_id") Integer courseId){
+        trailService.insertCourse(trailId, courseId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
 
 }

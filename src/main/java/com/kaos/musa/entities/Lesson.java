@@ -27,7 +27,7 @@ public class Lesson implements Serializable {
     @Column(name = "lesson_link", nullable = false)
     private String lessonVideo;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.   ALL)
     @JoinColumn(name = "course_id")
     private Course course;
 

@@ -14,7 +14,7 @@ import java.util.Objects;
 public class TrailCourses implements Serializable {
 
     @Serial
-    private static final long seriaVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @EmbeddedId
     private TrailCoursesPK id = new TrailCoursesPK();
@@ -22,27 +22,36 @@ public class TrailCourses implements Serializable {
     public TrailCourses() {
     }
 
-    public TrailCourses(TrailCoursesPK id) {
-        this.id = id;
+    public TrailCourses(Trail trail, Course course){
+        id.setTrail(trail);
+        id.setCourse(course);
     }
 
-    public TrailCoursesPK getId() {
-        return id;
+    public Trail getTrail(){
+        return id.getTrail();
     }
 
-    public void setId(TrailCoursesPK id) {
-        this.id = id;
+    public void setTrail(Trail trail){
+        id.setTrail(trail);
+    }
+
+    public Course getCourse(){
+        return id.getCourse();
+    }
+
+    public void setCourse(Course course){
+        id.setCourse(course);
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         TrailCourses that = (TrailCourses) o;
-        return Objects.equals(getId(), that.getId());
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hashCode(id);
     }
 }
