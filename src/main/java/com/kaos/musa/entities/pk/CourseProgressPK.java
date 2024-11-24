@@ -1,6 +1,7 @@
 package com.kaos.musa.entities.pk;
 
 import com.kaos.musa.entities.Course;
+import com.kaos.musa.entities.Trail;
 import com.kaos.musa.entities.User;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
@@ -19,6 +20,10 @@ public class CourseProgressPK {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @ManyToOne
+    @JoinColumn(name = "trail_id")
+    private Trail trail;
+
     public User getUser() {
         return user;
     }
@@ -33,6 +38,14 @@ public class CourseProgressPK {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Trail getTrail() {
+        return trail;
+    }
+
+    public void setTrail(Trail trail) {
+        this.trail = trail;
     }
 
     @Override

@@ -1,12 +1,15 @@
 package com.kaos.musa.services;
 
 import com.kaos.musa.entities.Course;
+import com.kaos.musa.entities.CourseProgress;
 import com.kaos.musa.entities.Lesson;
-import com.kaos.musa.repositories.CourseRepository;
-import com.kaos.musa.repositories.LessonRepository;
+import com.kaos.musa.entities.dto.CourseSubscribeDTO;
+import com.kaos.musa.entities.enums.CourseStatus;
+import com.kaos.musa.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,6 +20,15 @@ public class CourseService {
 
     @Autowired
     private LessonRepository lessonRepository;
+
+    @Autowired
+    private TrailRepository trailRepository;
+
+    @Autowired
+    private CourseProgressRepository courseProgressRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public void insert(Course course){
         courseRepository.save(course);
@@ -42,4 +54,5 @@ public class CourseService {
             throw new RuntimeException("Não foi possível achar o curso");
         }
     }
+
 }

@@ -2,7 +2,8 @@ package com.kaos.musa.controllers;
 
 import com.kaos.musa.entities.Trail;
 import com.kaos.musa.entities.TrailCourses;
-import com.kaos.musa.entities.TrailProgress;
+import com.kaos.musa.entities.dto.CourseSubscribeDTO;
+import com.kaos.musa.entities.dto.TrailSubscribeDTO;
 import com.kaos.musa.services.TrailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,11 +45,16 @@ public class TrailController {
 
     /* User Relations */
 
-    @PostMapping("/{trail_id}/user/{user_id}")
-    public ResponseEntity<Void> subscribeUserToTrail(
-            @PathVariable(name = "trail_id") Integer trailId, @PathVariable(name = "user_id") Integer userId){
-        trailService.subscribeUser(trailId, userId);
+    @PostMapping("/user/subscribe")
+    public ResponseEntity<Void> subscribeUserToTrail(@RequestBody TrailSubscribeDTO data){
+        trailService.subscribeUserToTrail(data);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @PostMapping("/course/user/subscribe")
+    public ResponseEntity<Void> subscribeUserToCourse(@RequestBody CourseSubscribeDTO data){
+        trailService.subscribeUserToCourse(data);
+        return ResponseEntity.accepted().build();
     }
 
 

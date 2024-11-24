@@ -32,9 +32,10 @@ public class CourseProgress implements Serializable {
     public CourseProgress() {
     }
 
-    public CourseProgress(User user, Course course, LocalDateTime startDate, CourseStatus status) {
+    public CourseProgress(User user, Course course, Trail trail, LocalDateTime startDate, CourseStatus status) {
         id.setUser(user);
         id.setCourse(course);
+        id.setTrail(trail);
         this.startDate = startDate;
         this.status = status;
     }
@@ -53,6 +54,14 @@ public class CourseProgress implements Serializable {
 
     public void setCourse(Course course){
         id.setCourse(course);
+    }
+
+    public Trail getTrail(){
+        return id.getTrail();
+    }
+
+    public void setTrail(Trail trail){
+        id.setTrail(trail);
     }
 
     public LocalDateTime getStartDate() {

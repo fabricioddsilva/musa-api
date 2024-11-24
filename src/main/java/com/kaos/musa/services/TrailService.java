@@ -1,9 +1,9 @@
 package com.kaos.musa.services;
 
-import com.kaos.musa.entities.Course;
-import com.kaos.musa.entities.Trail;
-import com.kaos.musa.entities.TrailCourses;
-import com.kaos.musa.entities.TrailProgress;
+import com.kaos.musa.entities.*;
+import com.kaos.musa.entities.dto.CourseSubscribeDTO;
+import com.kaos.musa.entities.dto.TrailSubscribeDTO;
+import com.kaos.musa.entities.enums.CourseStatus;
 import com.kaos.musa.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,9 @@ public class TrailService {
     @Autowired
     private TrailProgressRepository trailProgressRepository;
 
+    @Autowired
+    private CourseProgressRepository courseProgressRepository;
+
     public List<Trail> findAll(){
         return trailRepository.findAll();
     }
@@ -37,12 +40,6 @@ public class TrailService {
         trailRepository.save(trail);
     }
 
-    public Trail findById(Integer id){
-        if(trailRepository.findById(id).isEmpty()){
-            throw new RuntimeException("Não encontrado");
-        }
-        return trailRepository.findById(id).get();
-    }
 
     public List<TrailCourses> findAllTrailCourses(Integer id){
         if (trailRepository.existsById(id)){
@@ -67,17 +64,27 @@ public class TrailService {
         }
     }
 
-    public void subscribeUser(int trailId, int userId){
-        if(userRepository.existsById(userId)){
+    public void subscribeUserToTrail(TrailSubscribeDTO data){
+        if(userRepository.existsById(data.userId())){
                 trailProgressRepository.save(new TrailProgress(
-                        trailRepository.findById(trailId).get(),
-                        userRepository.findById(userId).get(),
+                        trailRepository.findById(data.trailId()).get(),
+                        userRepository.findById(data.userId()).get(),
                         LocalDateTime.now(),
                         0.0
                 ));
             } else {
             throw new RuntimeException("Usuário não encontrado");
         }
+    }
+
+    public void subscribeUserToCourse(CourseSubscribeDTO data){
+        courseProgressRepository.save(new CourseProgress(
+                userRepository.findById(data.userId()).get(),
+                courseRepository.findById(data.courseId()).get(),
+                trailRepository.findById(data.trailId()).get(),
+                LocalDateTime.now(),
+                CourseStatus.ANDAMENTO
+        ));
     }
 }
 

@@ -1,8 +1,11 @@
 package com.kaos.musa.controllers;
 
+import com.kaos.musa.entities.CourseProgress;
 import com.kaos.musa.entities.TrailProgress;
 import com.kaos.musa.entities.User;
+import com.kaos.musa.entities.dto.CourseSubscribeDTO;
 import com.kaos.musa.services.UserService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +36,13 @@ public class UserController {
     @GetMapping("/{id}/trails")
     public ResponseEntity<List<TrailProgress>> findAllTrailProgressById(@PathVariable(name = "id") Integer userId){
         return ResponseEntity.ok().body(userService.findAllTrailProgressById(userId));
+    }
+
+    /* Course Relations */
+
+    @GetMapping("{id}/trails/courses")
+    public ResponseEntity<List<CourseProgress>> findAllCourseProgressById(@PathVariable(name = "id") int userId){
+        return ResponseEntity.ok().body(userService.findAllCourseProgressById(userId));
     }
 
 
