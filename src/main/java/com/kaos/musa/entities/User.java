@@ -1,48 +1,82 @@
 package com.kaos.musa.entities;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.kaos.musa.entities.enums.UserRole;
+import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Document(collection = "user")
+@Entity
+@Table(name = "users")
 public class User implements Serializable {
 
     @Serial
     private final static long serialVersionUID = 1L;
 
-    private String id;
-    private String username;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Integer id;
+
+    @Column(name = "user_name")
+    private String name;
+
+    @Column(name = "user_login")
+    private String login;
+
+    @Column(name = "user_password")
     private String password;
+
+    @Column(name = "user_email")
     private String email;
-    private String cnpj;
+
+    @Column(name = "user_company")
+    private String company;
+
+    @Column(name = "user_position")
+    private String position;
+
+    @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     public User() {
     }
 
-    public User(String id, String username, String password, String email, String cnpj) {
+    public User(Integer id, String name, String login, String password, String email, String company, String position, UserRole role) {
         this.id = id;
-        this.username = username;
+        this.name = name;
+        this.login = login;
         this.password = password;
         this.email = email;
-        this.cnpj = cnpj;
+        this.company = company;
+        this.position = position;
+        this.role = role;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -61,12 +95,28 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getCnpj() {
-        return cnpj;
+    public String getCompany() {
+        return company;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     @Override

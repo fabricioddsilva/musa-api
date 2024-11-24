@@ -2,7 +2,8 @@ package com.kaos.musa.entities.enums;
 
 public enum UserRole {
     ADMIN("admin"),
-    USER("user");
+    MANAGER("manager"),
+    EMPLOYEE("employee");
 
     private String role;
 

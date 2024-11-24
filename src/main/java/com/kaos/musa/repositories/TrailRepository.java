@@ -1,9 +1,9 @@
 package com.kaos.musa.repositories;
 
-import com.kaos.musa.entities.User;
+import com.kaos.musa.entities.Trail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface TrailRepository extends JpaRepository<Trail, Integer> {
 }
