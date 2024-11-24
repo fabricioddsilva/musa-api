@@ -12,4 +12,7 @@ public interface TrailProgressRepository extends JpaRepository<TrailProgress, In
 
     @Query(value = "select * from trail_progress where user_id = ?" ,nativeQuery = true)
     List<TrailProgress> findAllByUserId(int userId);
+
+    @Query(value = "select * from trail_progress where user_id = ? and trail_id = ?", nativeQuery = true)
+    TrailProgress findByTrailIdAndUserId(int userId, int trailId);
 }

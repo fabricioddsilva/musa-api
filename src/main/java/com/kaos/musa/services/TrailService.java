@@ -86,5 +86,21 @@ public class TrailService {
                 CourseStatus.ANDAMENTO
         ));
     }
+
+    public void updateProgress(int courseId, int userId){
+        CourseProgress courseProgress = courseProgressRepository.findCourseByUserAndCourse(userId, courseId);
+        courseProgress.setStatus(CourseStatus.COMPLETO);
+        courseProgressRepository.save(courseProgress);
+        updateTrail(courseProgress.getTrail().getId(), userId);
+    }
+
+    public void updateTrail(int trailId, int userId){
+        TrailProgress trail = trailProgressRepository.findByTrailIdAndUserId(userId, trailId);
+        int coursesCompleted = courseProgressRepository.countCoursesCompleted(userId, trailId);
+        int totalCourses = trailCoursesRepository.countTrailCoursesByTrailId(trailId);
+        double completion = Math.round((float) (coursesCompleted * 100) /totalCourses);
+        trail.setCompletion(completion);
+        trailProgressRepository.save(trail);
+    }
 }
 

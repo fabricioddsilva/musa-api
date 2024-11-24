@@ -57,6 +57,15 @@ public class TrailController {
         return ResponseEntity.accepted().build();
     }
 
+    @PatchMapping("/course/{course_id}/user/{user_id}/completed")
+    public ResponseEntity<Void> updateConclusion(
+            @PathVariable("course_id") int courseId, @PathVariable("user_id") int userId){
+        trailService.updateProgress(courseId, userId);
+        return ResponseEntity.ok().build();
+    }
+
+
+
 
 
 

@@ -17,4 +17,7 @@ public interface TrailCoursesRepository extends JpaRepository<TrailCourses, Inte
             "join courses as c on tc.course_id = c.course_id " +
             "where t.trail_id = ?", nativeQuery = true)
     List<TrailCourses> findTrailCoursesByTrailId(Integer trailId);
+
+    @Query(value = "select count(course_id) from trail_courses where trail_id = ?", nativeQuery = true)
+    int countTrailCoursesByTrailId(int trailId);
 }
