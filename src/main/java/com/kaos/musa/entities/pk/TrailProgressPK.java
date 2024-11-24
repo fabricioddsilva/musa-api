@@ -1,6 +1,5 @@
 package com.kaos.musa.entities.pk;
 
-import com.kaos.musa.entities.Course;
 import com.kaos.musa.entities.Trail;
 import com.kaos.musa.entities.User;
 import jakarta.persistence.Embeddable;
@@ -12,7 +11,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class CoursesProgressPK implements Serializable {
+public class TrailProgressPK implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -21,9 +20,6 @@ public class CoursesProgressPK implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
 
     @ManyToOne
     @JoinColumn(name = "trail_id")
@@ -37,14 +33,6 @@ public class CoursesProgressPK implements Serializable {
         this.user = user;
     }
 
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
     public Trail getTrail() {
         return trail;
     }
@@ -56,12 +44,12 @@ public class CoursesProgressPK implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        CoursesProgressPK that = (CoursesProgressPK) o;
-        return Objects.equals(getUser(), that.getUser()) && Objects.equals(getCourse(), that.getCourse()) && Objects.equals(getTrail(), that.getTrail());
+        TrailProgressPK that = (TrailProgressPK) o;
+        return Objects.equals(getUser(), that.getUser()) && Objects.equals(getTrail(), that.getTrail());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser(), getCourse(), getTrail());
+        return Objects.hash(getUser(), getTrail());
     }
 }

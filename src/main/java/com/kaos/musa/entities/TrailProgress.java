@@ -1,6 +1,6 @@
 package com.kaos.musa.entities;
 
-import com.kaos.musa.entities.pk.CoursesProgressPK;
+import com.kaos.musa.entities.pk.TrailProgressPK;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "courses_in_progress")
-public class CoursesProgress implements Serializable {
+@Table(name = "trail_progress")
+public class TrailProgress implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private CoursesProgressPK id = new CoursesProgressPK();
+    private TrailProgressPK id = new TrailProgressPK();
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
@@ -27,25 +27,34 @@ public class CoursesProgress implements Serializable {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @Column(name = "course_completion")
+    @Column(name = "trail_completion")
     private Double completion;
 
-    public CoursesProgress() {
+    public TrailProgress() {
     }
 
-    public CoursesProgress(CoursesProgressPK id, LocalDateTime startDate, LocalDateTime endDate, Double completion) {
-        this.id = id;
+    public TrailProgress(Trail trail, User user, LocalDateTime startDate, Double completion) {
+        id.setTrail(trail);
+        id.setUser(user);
         this.startDate = startDate;
-        this.endDate = endDate;
         this.completion = completion;
     }
 
-    public CoursesProgressPK getId() {
-        return id;
+    public Trail getTrail(){
+        return id.getTrail();
     }
 
-    public void setId(CoursesProgressPK id) {
-        this.id = id;
+    public void setTrail(Trail trail){
+        id.setTrail(trail);
+    }
+
+
+    public User getUser(){
+       return id.getUser();
+    }
+
+    public void setUser(User user){
+        id.setUser(user);
     }
 
     public LocalDateTime getStartDate() {
@@ -75,12 +84,12 @@ public class CoursesProgress implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        CoursesProgress that = (CoursesProgress) o;
-        return Objects.equals(getId(), that.getId());
+        TrailProgress that = (TrailProgress) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hashCode(id);
     }
 }

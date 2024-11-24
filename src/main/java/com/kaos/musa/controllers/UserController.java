@@ -1,5 +1,6 @@
 package com.kaos.musa.controllers;
 
+import com.kaos.musa.entities.TrailProgress;
 import com.kaos.musa.entities.User;
 import com.kaos.musa.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +15,24 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService service;
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<List<User>> findAll(){
-        return ResponseEntity.ok(service.findAll());
+        return ResponseEntity.ok(userService.findAll());
     }
 
     @PostMapping
     public ResponseEntity<User> insert(@RequestBody User user){
-        service.insert(user);
+        userService.insert(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    /* Trail Relations */
+
+    @GetMapping("/{id}/trails")
+    public ResponseEntity<List<TrailProgress>> findAllTrailProgressById(@PathVariable(name = "id") Integer userId){
+        return ResponseEntity.ok().body(userService.findAllTrailProgressById(userId));
     }
 
 

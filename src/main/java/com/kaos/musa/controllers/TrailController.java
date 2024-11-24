@@ -2,6 +2,7 @@ package com.kaos.musa.controllers;
 
 import com.kaos.musa.entities.Trail;
 import com.kaos.musa.entities.TrailCourses;
+import com.kaos.musa.entities.TrailProgress;
 import com.kaos.musa.services.TrailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class TrailController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /* Course Relations */
     @GetMapping("/{id}")
     public ResponseEntity<List<TrailCourses>> findById(@PathVariable Integer id){
         return ResponseEntity.ok().body(trailService.findAllTrailCourses(id));
@@ -39,6 +41,16 @@ public class TrailController {
         trailService.insertCourse(trailId, courseId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    /* User Relations */
+
+    @PostMapping("/{trail_id}/user/{user_id}")
+    public ResponseEntity<Void> subscribeUserToTrail(
+            @PathVariable(name = "trail_id") Integer trailId, @PathVariable(name = "user_id") Integer userId){
+        trailService.subscribeUser(trailId, userId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
 
 
 

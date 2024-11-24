@@ -3,12 +3,12 @@ package com.kaos.musa.services;
 import com.kaos.musa.entities.Course;
 import com.kaos.musa.entities.Trail;
 import com.kaos.musa.entities.TrailCourses;
-import com.kaos.musa.repositories.CourseRepository;
-import com.kaos.musa.repositories.TrailCoursesRepository;
-import com.kaos.musa.repositories.TrailRepository;
+import com.kaos.musa.entities.TrailProgress;
+import com.kaos.musa.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,6 +22,12 @@ public class TrailService {
 
     @Autowired
     private TrailCoursesRepository trailCoursesRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TrailProgressRepository trailProgressRepository;
 
     public List<Trail> findAll(){
         return trailRepository.findAll();
@@ -58,6 +64,19 @@ public class TrailService {
             }
         } else {
             throw new RuntimeException("Trilha Não Encontrada");
+        }
+    }
+
+    public void subscribeUser(int trailId, int userId){
+        if(userRepository.existsById(userId)){
+                trailProgressRepository.save(new TrailProgress(
+                        trailRepository.findById(trailId).get(),
+                        userRepository.findById(userId).get(),
+                        LocalDateTime.now(),
+                        0.0
+                ));
+            } else {
+            throw new RuntimeException("Usuário não encontrado");
         }
     }
 }
